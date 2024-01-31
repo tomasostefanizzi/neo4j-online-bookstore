@@ -1,0 +1,486 @@
+{
+  "title": "My Dashboard",
+  "version": "2.4",
+  "settings": {
+    "pagenumber": 0,
+    "editable": false,
+    "fullscreenEnabled": false,
+    "parameters": {
+      "neodash_121": {
+        "year": 2001,
+        "month": 12,
+        "day": 3
+      },
+      "neodash_author_name": "Agatha Christie",
+      "neodash_author_name_display": "Agatha Christie",
+      "neodash_user_profilename": "Bookreporter",
+      "neodash_user_profilename_display": "Bookreporter"
+    },
+    "theme": "light",
+    "downloadImageEnabled": true,
+    "disableRowLimiting": true
+  },
+  "pages": [
+    {
+      "title": "Main Page",
+      "reports": [
+        {
+          "id": "cc3d6981-0a1d-4e7f-a224-66e8e1e361f2",
+          "title": "Informations",
+          "query": " ##### **Author(s):** \n Tomaso Stefanizzi\n ##### **Contacts:**\n  * **Email:** tomaso.stefanizzi@gmail.com\n  * **GitHub**: https://github.com/tomasostefanizzi\n##### **Description:**\n This Dashboard should represent an overview of an online bookshop. Enjoy!",
+          "width": 7,
+          "height": 3,
+          "x": 0,
+          "y": 0,
+          "type": "text",
+          "selection": {},
+          "settings": {
+            "backgroundColor": "#AC0B0B3D"
+          }
+        },
+        {
+          "id": "240e8655-de23-464a-90f0-651db74bb1db",
+          "title": "Number of Reviews",
+          "query": "MATCH (r: Review)\nRETURN count(r) ",
+          "width": 6,
+          "height": 3,
+          "x": 17,
+          "y": 0,
+          "type": "value",
+          "selection": {},
+          "settings": {
+            "backgroundColor": "#31A1FD33",
+            "allowDownload": true,
+            "refreshButtonEnabled": false,
+            "fullscreenEnabled": false,
+            "type": "Node Property",
+            "arcsLength": "2, 3, 2 ",
+            "colors": "#EA4228, #F5CD19, #5BE12C"
+          },
+          "schema": []
+        },
+        {
+          "id": "5ac50882-8149-4cdc-9ac2-8f5fa4fbc7e6",
+          "title": "Average Number of Reviews per User",
+          "query": "MATCH (r:Review)<-[:WROTE]-(u:User)\nWITH u, count(r) AS NumberOfReviews\nRETURN round(avg(NumberOfReviews), 1) AS AverageReviewsPerUser",
+          "width": 8,
+          "height": 2,
+          "x": 15,
+          "y": 3,
+          "type": "value",
+          "selection": {},
+          "settings": {
+            "backgroundColor": "#0AF0D933"
+          },
+          "schema": []
+        },
+        {
+          "id": "dd9e2f53-02e4-483a-ac82-42021caec7b4",
+          "title": "Number of Users",
+          "query": "MATCH (n:User)\nRETURN count(n)\n\n\n",
+          "width": 5,
+          "height": 3,
+          "x": 7,
+          "y": 0,
+          "type": "value",
+          "selection": {},
+          "settings": {
+            "backgroundColor": "#6F00FF33"
+          },
+          "schema": []
+        },
+        {
+          "id": "7ac35b82-20bc-4c47-b808-d755854dbb23",
+          "title": "Number of Books",
+          "query": "MATCH(n:Book)\nRETURN count(n)\n\n\n",
+          "width": 5,
+          "height": 3,
+          "x": 12,
+          "y": 0,
+          "type": "value",
+          "selection": {},
+          "settings": {
+            "backgroundColor": "#0044FF33"
+          },
+          "schema": []
+        },
+        {
+          "id": "58ca73cc-041b-4835-b160-bdb802d6a2a1",
+          "title": "Average Number of Reviews per Book",
+          "query": "MATCH (b:Book)<-[:REVIEW_OF]-(r:Review)\nWITH b, count(r) AS NumberOfReviews\nRETURN round(avg(NumberOfReviews), 1) AS AverageReviewsPerBook\n\n\n",
+          "width": 8,
+          "height": 2,
+          "x": 7,
+          "y": 3,
+          "type": "value",
+          "selection": {},
+          "settings": {
+            "backgroundColor": "#BE26F133"
+          },
+          "schema": []
+        },
+        {
+          "id": "7c645554-030a-442d-a103-3cd4254468bf",
+          "title": "Total Revenue ($)",
+          "query": "MATCH (r:Review)\nReturn sum(r.price)\n\n\n",
+          "width": 7,
+          "height": 2,
+          "x": 0,
+          "y": 3,
+          "type": "value",
+          "selection": {},
+          "settings": {
+            "backgroundColor": "#F8BB0233"
+          },
+          "schema": []
+        }
+      ]
+    },
+    {
+      "title": "Data Insights",
+      "reports": [
+        {
+          "id": "b90bf82c-2b3c-4b41-9512-b04ce2e6e28c",
+          "title": "Authors whose books have the highest average review score, and that they have at least 200 reviews",
+          "query": "MATCH (a:Author)-[:WROTE]->(b:Book)<-[:REVIEW_OF]-(r:Review)\nWITH a, avg(r.score) AS AverageScore, count(r) AS NumberOfReviews\nWHERE NumberOfReviews >= 200\nRETURN a.name AS Author, AverageScore\nORDER BY AverageScore DESC",
+          "width": 24,
+          "height": 6,
+          "x": 0,
+          "y": 4,
+          "type": "bar",
+          "selection": {
+            "index": "Author",
+            "value": "AverageScore",
+            "key": "(none)"
+          },
+          "settings": {
+            "colors": "nivo",
+            "barValues": false,
+            "fullscreenEnabled": false,
+            "expandHeightForLegend": false,
+            "layout": "vertical",
+            "legend": true,
+            "minValue": 0,
+            "maxValue": 5,
+            "groupMode": "stacked",
+            "positionLabel": "bottom",
+            "marginBottom": 120
+          },
+          "schema": []
+        },
+        {
+          "id": "73572b0f-d9c9-4a5f-8075-adf6e0d7491a",
+          "title": "Top 50 prolific Writers",
+          "query": "\nMATCH (a:Author)-[:WROTE]->(b:Book)\nRETURN a.name AS Author, count(b) AS NumberOfBooks\nORDER BY NumberOfBooks DESC LIMIT 50\n\n",
+          "width": 6,
+          "height": 4,
+          "x": 0,
+          "y": 0,
+          "type": "table",
+          "selection": {},
+          "settings": {
+            "backgroundColor": "#E06A0233"
+          }
+        },
+        {
+          "id": "86b25208-7c19-47a6-848d-b421637b7dd8",
+          "title": "Top 50 Active Users and their Average Rating",
+          "query": "MATCH (u:User)-[:WROTE]->(r:Review)\nWITH u.id as ID, u.profileName as User, avg(r.score) AS AverageRating, count(r) AS NumberOfReviews\nRETURN User, NumberOfReviews,AverageRating \nORDER BY NumberOfReviews DESC LIMIT 50\n\n\n\n\n\n",
+          "width": 9,
+          "height": 4,
+          "x": 6,
+          "y": 0,
+          "type": "table",
+          "selection": {},
+          "settings": {
+            "backgroundColor": "#E0930233"
+          }
+        },
+        {
+          "id": "9ad4d615-d59b-4b59-85b5-5ee6222c5545",
+          "title": "Average Rating of the 10 most populated Categories",
+          "query": "MATCH (c:Category)<-[:IN_CATEGORY]-(b:Book)\nWITH c, count(b) AS NumberOfBooks\nORDER BY NumberOfBooks DESC\nLIMIT 10\nWITH collect(c.name) AS TopCategories\nUNWIND TopCategories AS Category\nMATCH (c:Category {name: Category})<-[:IN_CATEGORY]-(b:Book)<-[:REVIEW_OF]-(r:Review)\nRETURN c.name AS Category, avg(r.score) AS AverageRating\n\n",
+          "width": 9,
+          "height": 4,
+          "x": 15,
+          "y": 0,
+          "type": "table",
+          "selection": {},
+          "settings": {
+            "backgroundColor": "#E0B00233"
+          }
+        },
+        {
+          "id": "916ff634-15f8-4594-bc13-f8ca8afd8cb9",
+          "title": "Distribution of the Ratings",
+          "query": "MATCH (r:Review)\nRETURN r.score AS Rating, count(*) AS Count\nORDER BY Rating\n\n\n\n\n\n",
+          "width": 12,
+          "height": 4,
+          "x": 0,
+          "y": 10,
+          "type": "line",
+          "selection": {
+            "x": "Rating",
+            "value": [
+              "Count"
+            ]
+          },
+          "settings": {
+            "marginLeft": 70,
+            "marginBottom": 70,
+            "backgroundColor": "#26710021",
+            "ignoreNonDefinedParams": true,
+            "hideSelections": true
+          },
+          "schema": []
+        },
+        {
+          "id": "267da1e1-55b6-4e10-a9c7-e9a4f89de214",
+          "title": "Top Books that have the highest average review score, with at least 200 reviews",
+          "query": "MATCH (b:Book)<-[:REVIEW_OF]-(r:Review)\nWITH b, avg(r.score) AS AverageScore, count(r) AS NumberOfReviews\nWHERE NumberOfReviews >= 200\nRETURN b.title AS Book, AverageScore\nORDER BY AverageScore DESC",
+          "width": 24,
+          "height": 7,
+          "x": 0,
+          "y": 14,
+          "type": "bar",
+          "selection": {
+            "index": "Book",
+            "value": "AverageScore",
+            "key": "(none)"
+          },
+          "settings": {
+            "layout": "vertical",
+            "marginBottom": 300,
+            "customDimensions": false,
+            "barWidth": 20,
+            "legend": true,
+            "minValue": 0,
+            "maxValue": 5
+          },
+          "schema": []
+        },
+        {
+          "id": "6b2226d2-8a0f-47ba-bb12-01569ee4018c",
+          "title": "Top 50 publishers",
+          "query": "MATCH (b: Book)\nWITH b.publisher as Publisher, count(*) as PublishedBooks\nRETURN Publisher, PublishedBooks\nORDER BY PublishedBooks DESC limit 50\n\n\n",
+          "width": 12,
+          "height": 4,
+          "x": 12,
+          "y": 10,
+          "type": "table",
+          "selection": {},
+          "settings": {
+            "backgroundColor": "#00E60012"
+          }
+        },
+        {
+          "id": "80f8863f-206b-483e-9e7c-91cc97ceb192",
+          "title": "Select an Author",
+          "query": "MATCH (n:`Author`) \nWHERE toLower(toString(n.`name`)) CONTAINS toLower($input) \nRETURN DISTINCT n.`name` as value,  n.`name` as display ORDER BY size(toString(value)) ASC LIMIT 5",
+          "width": 8,
+          "height": 4,
+          "x": 0,
+          "y": 21,
+          "type": "select",
+          "selection": {},
+          "settings": {
+            "type": "Node Property",
+            "entityType": "Author",
+            "propertyType": "name",
+            "propertyTypeDisplay": "name",
+            "parameterName": "neodash_author_name",
+            "backgroundColor": "#05B1F538"
+          },
+          "schema": []
+        },
+        {
+          "id": "8da444a0-9175-4090-abc7-99592cad5f74",
+          "title": "Autor graph",
+          "query": "MATCH path=(a:Author)--()\nWHERE a.name = $neodash_author_name \nRETURN path\n\n\n",
+          "width": 10,
+          "height": 4,
+          "x": 8,
+          "y": 21,
+          "type": "graph",
+          "selection": {
+            "Author": "name",
+            "Book": "title"
+          },
+          "settings": {
+            "backgroundColor": "#1BC7E617",
+            "nodeLabelColor": "#020202",
+            "frozen": false,
+            "nodePositions": {}
+          },
+          "schema": [
+            [
+              "Author",
+              "name"
+            ],
+            [
+              "Book",
+              "description",
+              "publisher",
+              "ratingsCount",
+              "publishedDate",
+              "title"
+            ]
+          ]
+        },
+        {
+          "id": "31166b0c-6a36-43fc-832f-e02c2274aad8",
+          "title": "Selected Author Books",
+          "query": "MATCH (b: Book)<-[:WROTE]-(a)\nWHERE a.name = $neodash_author_name \nRETURN b.title as Books\n\n\n",
+          "width": 6,
+          "height": 4,
+          "x": 18,
+          "y": 21,
+          "type": "table",
+          "selection": {},
+          "settings": {
+            "backgroundColor": "#29537552"
+          }
+        }
+      ]
+    },
+    {
+      "title": "Revenue Report",
+      "reports": [
+        {
+          "id": "6d98a412-6c49-4502-8b12-40288120ec4f",
+          "title": "Top 10 Books by Revenue",
+          "query": "MATCH (b:Book)<-[:REVIEW_OF]-(r:Review)\nWITH b, sum(r.price) AS Revenue\nRETURN b.title as Book, round(Revenue,2) as `Revenue in $`\nORDER BY Revenue DESC\nLIMIT 10",
+          "width": 8,
+          "height": 4,
+          "x": 0,
+          "y": 0,
+          "type": "table",
+          "selection": {},
+          "settings": {
+            "backgroundColor": "#F5000033"
+          },
+          "schema": []
+        },
+        {
+          "id": "aec4bbcb-e0cf-4896-9f97-a09a93ac29ff",
+          "title": "Top 10 Publishers by Revenue",
+          "query": "MATCH (b:Book)<-[:REVIEW_OF]-(r:Review)\nWITH b.publisher AS Publisher, sum(r.price) AS `Revenue in $`\nRETURN Publisher, `Revenue in $`\nORDER BY `Revenue in $` DESC\nLIMIT 10\n\n\n",
+          "width": 8,
+          "height": 4,
+          "x": 8,
+          "y": 0,
+          "type": "table",
+          "selection": {},
+          "settings": {
+            "backgroundColor": "#F7390533"
+          }
+        },
+        {
+          "id": "1ab7c626-d720-4926-8747-63a19ee460e4",
+          "title": "Rank of the best Prices by Revenue",
+          "query": "MATCH (r:Review)\nWITH r.price AS `Price in $`, sum(r.price) AS `Total Revenue in $`\nRETURN `Price in $`, `Total Revenue in $`\nORDER BY `Total Revenue in $` DESC\n\n\n",
+          "width": 8,
+          "height": 4,
+          "x": 16,
+          "y": 0,
+          "type": "table",
+          "selection": {},
+          "settings": {
+            "backgroundColor": "#F7840033"
+          },
+          "schema": []
+        },
+        {
+          "id": "ac2d3e45-3649-47b8-ade4-c8f353ee08b4",
+          "title": "Select User",
+          "query": "MATCH (n:`User`) \nWHERE toLower(toString(n.`profileName`)) CONTAINS toLower($input) \nRETURN DISTINCT n.`profileName` as value,  n.`profileName` as display ORDER BY size(toString(value)) ASC LIMIT 5",
+          "width": 6,
+          "height": 2,
+          "x": 0,
+          "y": 4,
+          "type": "select",
+          "selection": {},
+          "settings": {
+            "type": "Node Property",
+            "entityType": "User",
+            "propertyType": "profileName",
+            "propertyTypeDisplay": "profileName",
+            "parameterName": "neodash_user_profilename"
+          },
+          "schema": []
+        },
+        {
+          "id": "2624cd39-d6c6-4e0b-87c8-21e763a56462",
+          "title": "Selected User Purchases($)",
+          "query": "MATCH (u: User)-[:WROTE]->(r:Review)\nWHERE u.profileName = $neodash_user_profilename\nRETURN sum(r.price) as totalPurchases\n\n\n",
+          "width": 6,
+          "height": 2,
+          "x": 0,
+          "y": 6,
+          "type": "value",
+          "selection": {},
+          "settings": {},
+          "schema": []
+        },
+        {
+          "id": "108dcabb-5dab-4666-aab3-68c1bccbb3a1",
+          "title": "Selected User Graph",
+          "query": "MATCH path=(u:User)--()\nWHERE u.profileName = $neodash_user_profilename \nRETURN path\n\n\n\n",
+          "width": 7,
+          "height": 4,
+          "x": 6,
+          "y": 4,
+          "type": "graph",
+          "selection": {
+            "User": "profileName",
+            "Review": "score"
+          },
+          "settings": {},
+          "schema": [
+            [
+              "User",
+              "profileName",
+              "id"
+            ],
+            [
+              "Review",
+              "summary",
+              "score",
+              "price",
+              "text",
+              "time",
+              "id",
+              "helpfulness"
+            ]
+          ]
+        },
+        {
+          "id": "20d7c863-1078-4716-a9b8-3cde12c18eb6",
+          "title": "Selected User Price Profiling",
+          "query": "MATCH (u: User)-[:WROTE]->(r:Review)\nWHERE u.profileName = $neodash_user_profilename\nWITH r.price as price, count(*) as Count\nRETURN price, Count\nORDER BY price \n",
+          "width": 11,
+          "height": 4,
+          "x": 13,
+          "y": 4,
+          "type": "bar",
+          "selection": {
+            "index": "price",
+            "value": "Count",
+            "key": "(none)"
+          },
+          "settings": {},
+          "schema": []
+        }
+      ]
+    }
+  ],
+  "parameters": {},
+  "extensions": {
+    "active": true,
+    "activeReducers": [],
+    "advanced-charts": {
+      "active": true
+    }
+  },
+  "uuid": "1f35a9e4-c528-4515-bf95-73e5351d6350"
+}

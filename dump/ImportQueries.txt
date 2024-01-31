@@ -1,0 +1,23 @@
+
+// QUERY 1
+// Load the books CSV
+LOAD CSV WITH HEADERS FROM 'file:///books_clean.csv' AS row
+MERGE (b:Book {title: row.Title})
+ON CREATE SET b.description = row.description, b.publisher = row.publisher, b.publishedDate = row.publishedDate, b.ratingsCount = toInteger(row.ratingsCount)
+MERGE (a:Author {name: row.authors})
+MERGE (a)-[:WROTE]->(b)
+MERGE (c:Category {name: row.categories})
+MERGE (b)-[:IN_CATEGORY]->(c)
+
+
+
+// QUERY 2
+// Load the ratings CSV
+LOAD CSV WITH HEADERS FROM 'file:///ratings_clean.csv' AS row
+MATCH (b:Book {title: row.Title})
+MERGE (u:User {id: row.User_id})
+ON CREATE SET u.profileName = row.profileName
+MERGE (r:Review {id: row.review_id})
+ON CREATE SET r.price = toFloat(row.Price), r.helpfulness = row.`review/helpfulness`, r.score = toFloat(row.`review/score`), r.time = toInteger(row.`review/time`), r.summary = row.`review/summary`, r.text = row.`review/text`
+MERGE (u)-[:WROTE]->(r)
+MERGE (r)-[:REVIEW_OF]->(b)
