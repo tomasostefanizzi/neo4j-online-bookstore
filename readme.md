@@ -2,10 +2,10 @@
 --------------------
 A simple Dashboard of an online book store, built using Neo4j.
 
+![dashboard_mainPage](https://github.com/tomasostefanizzi/neo4j-online-bookstore/assets/100636516/2c19273b-ad3a-431a-8cf1-632f84e1debd)
+![dashboard_dataInsights](https://github.com/tomasostefanizzi/neo4j-online-bookstore/assets/100636516/eff395fa-bb98-420d-8f31-7ad46e6a104f)
+![dashboard_revenueReport](https://github.com/tomasostefanizzi/neo4j-online-bookstore/assets/100636516/b80ce1ef-11ad-4a61-b124-ef3b0de03dc3)
 
-![](Pictures\dashboard_mainPage.png)
-![](Pictures\dashboard_dataInsights.png)
-![](Pictures\dashboard_revenueReport.png)
 
 
 ### instructions
