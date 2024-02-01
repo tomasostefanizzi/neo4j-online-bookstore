@@ -3,9 +3,9 @@
 A simple Dashboard of an online book store, built using Neo4j.
 
 
-![Alt Text](Pictures\dashboard_mainPage.png)
-![Alt Text](Pictures\dashboard_dataInsights.png)
-![Alt Text](Pictures\dashboard_revenueReport.png)
+![](Pictures\dashboard_mainPage.png)
+![](Pictures\dashboard_dataInsights.png)
+![](Pictures\dashboard_revenueReport.png)
 
 
 ### instructions
