@@ -2,8 +2,13 @@
 --------------------
 A simple Dashboard of an online book store, built using Neo4j.
 
-### instructions
 
+![Alt Text](Pictures\dashboard_mainPage.png)
+![Alt Text](Pictures\dashboard_dataInsights.png)
+![Alt Text](Pictures\dashboard_revenueReport.png)
+
+
+### instructions
 -	in the **\dump** folder I provided the cleaned .csv files, plus the queries for creating the relationships and the entities.
 
 -	the data wrangling procedure is made available in _data_cleaning.ipynb_
